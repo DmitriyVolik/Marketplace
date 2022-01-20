@@ -21,18 +21,15 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
                 </ul>
             </div>
             <div class="collapse d-sm-inline-flex justify-content-end">
                  <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="">Войти</a>
+                        <a class="nav-link text-white" asp-area="" asp-controller="Auth" asp-action="SignIn" >Войти</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="">Регистрация</a>
+                        <a class="nav-link text-white" asp-area="" asp-controller="Auth" asp-action="SignUp">Регистрация</a>
                     </li>
                 </ul>
             </div>
@@ -47,7 +44,7 @@
 
 <footer class="border-top footer text-muted">
     <div class="container">
-        &copy; 2022 - Marketplace - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        &copy; 2022 - Marketplace
     </div>
 </footer>
 

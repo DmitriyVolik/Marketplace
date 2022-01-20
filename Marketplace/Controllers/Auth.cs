@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -33,7 +34,7 @@ namespace Marketplace.Controllers
         }
         
         [HttpPost("CreateAccount")]
-        public IActionResult CreateAccount(string email, string username, string password)
+        public IActionResult CreateAccount(string email, string username, string password, string confirmPassword)
         {
             bool hasErrors=false;
             if (email==null || username==null || password==null)
@@ -85,7 +86,7 @@ namespace Marketplace.Controllers
         }
         
         [HttpPost("SignInAccount")]
-        public IActionResult CreateAccount(string username, string password)
+        public IActionResult SignInAccount(string username, string password)
         {
             var user = _db.Users.FirstOrDefault(x => x.Username == username );
             

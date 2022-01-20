@@ -1,0 +1,27 @@
+@{
+    var error = TempData["Error"] as string;
+}
+
+<div class="d-flex justify-content-center">
+    <div>
+        @if (!string.IsNullOrEmpty(error))
+        {
+            <h2 class="alert-danger" style="padding: 20px">@error</h2>
+        }
+        <h5>SignIn</h5>
+        <form >
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><img src="~/images/icons/person-fill.svg"/></span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><img src="~/images/icons/lock-fill.svg"/></span>
+                <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+            </div>
+        </form>
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary" type="button">Sign in</button>
+            <button class="btn btn-secondary ms-3" type="button">Forgot password?</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "1ef5104c-3c64-4f6a-a1af-ec8f478cf311": {
+      "ProjectGuid": "1ef5104c-3c64-4f6a-a1af-ec8f478cf311",
+      "DisplayName": "Marketplace",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

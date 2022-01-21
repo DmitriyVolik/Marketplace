@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Marketplace.Models;
+using Marketplace.Models.DB;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +27,22 @@ namespace Marketplace
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddAuthentication(
+                CookieAuthenticationDefaults.AuthenticationScheme
+            ).AddCookie(
+                options =>
+                {
+                    options.LoginPath = "/login";
+                    options.AccessDeniedPath = "/index";
+                    options.Events = new CookieAuthenticationEvents()
+                    {
+                        OnSigningIn = async context =>
+                        {
+                            await Task.CompletedTask;
+                        }
+                    };
+                }
+            );
             services.AddNpgsql<Context>(Configuration["ConnectionStrings:Database"]);
         }
 
@@ -47,6 +65,7 @@ namespace Marketplace
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -1,0 +1,18 @@
+@{
+    var error = TempData["Error"] as string;
+}
+@if (!string.IsNullOrEmpty(error))
+{
+    <h3 class="alert-danger" style="padding: 20px">@error</h3>
+}
+<div class="d-flex justify-content-center">
+    <div class="">
+        <h5>Check your mail</h5>
+        <form action="/CheckEmailCode" method="post">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="code">
+            </div>
+        </form>
+        
+    </div>
+</div>

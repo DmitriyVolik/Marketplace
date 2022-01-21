@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Marketplace.Models
+namespace Marketplace.Models.DB
 {
     public class Context:DbContext
     {
@@ -10,5 +10,7 @@ namespace Marketplace.Models
         }
         
         public DbSet<User> Users { get; set; }
+        
+        public DbSet<ConfirmationCode> ConfirmationCodes { get; set; }
     }
 }

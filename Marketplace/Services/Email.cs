@@ -3,9 +3,9 @@ using System.Net.Mail;
 
 namespace Forum_MVC.Helpers
 {
-    public class Email
+    public static class Email
     {
-        public void Send(string email, string body, string subject)
+        public static void Send(string email, string body, string subject)
         {
             var smtpClient = new SmtpClient("smtp.gmail.com")
             {

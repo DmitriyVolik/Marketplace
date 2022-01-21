@@ -1,4 +1,4 @@
-namespace Marketplace.Models
+namespace Marketplace.Models.DB
 {
     public class User
     {

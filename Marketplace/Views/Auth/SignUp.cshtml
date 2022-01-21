@@ -3,7 +3,7 @@
 }
 @if (!string.IsNullOrEmpty(error))
 {
-    <h2 class="alert-danger" style="padding: 20px">@error</h2>
+    <h3 class="alert-danger" style="padding: 20px">@error</h3>
 }
 <div class="d-flex justify-content-center">
     <div class="">
@@ -11,7 +11,7 @@
         <form action="/CreateAccount" method="post">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><img src="~/images/icons/person-fill.svg"/></span>
-                <input type="text" class="form-control" placeholder="Username" name="username">
+                <input minlength="4" maxlength="18" type="text" class="form-control" placeholder="Username" name="username">
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><img src="~/images/icons/envelope.svg"/></span>
@@ -19,11 +19,11 @@
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><img src="~/images/icons/lock-fill.svg"/></span>
-                <input type="password" class="form-control" placeholder="Password" name="password">
+                <input type="password" minlength="8" maxlength="16" class="form-control" placeholder="Password" name="password">
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><img src="~/images/icons/lock-fill.svg"/></span>
-                <input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword">
+                <input type="password" minlength="8" maxlength="16" class="form-control" placeholder="Confirm Password" name="confirmPassword">
             </div>
             <div class="d-grid gap-2">
                 <button class="btn btn-primary" type="submit">Sign Up</button>

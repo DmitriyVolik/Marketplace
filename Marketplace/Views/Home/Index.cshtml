@@ -1,8 +1,50 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<form class="w-50" method="post" action="/AddAnnouncement">
+    <div class="mb-3">
+        <label for="adsTitle" class="form-label">Название объявления</label>
+        <input type="text" class="form-control" id="inputTitle" name="title" />
+        <div id="adsTitleHelp" class="form-text">От названия зависит многое...</div>
+    </div>
+    <div class="mb-3">
+        <label for="adsImages" class="form-label">Изображения</label>
+        <input class="form-control" type="file" id="inputImages" multiple name="images" />
+        <div id="adsDescriptionHelp" class="form-text">Выберите изображения, которые вы хотите добавить в объявление.</div>
+    </div>
+    <div class="mb-3">
+        <label for="adsDescription" class="form-label">Описание объявления</label>
+        <input type="text" class="form-control form-text form-check-inline" id="inputDescription" name="description" />
+    </div>
+    <div class="mb-3">
+        <label for="adsDescription" class="form-label">Объявленная цена</label>
+        <input type="number" class="form-control form-text form-check-inline" id="inputPrice" name="price" />
+    </div>
+    <button type="submit" class="btn btn-primary">Создать объявление</button>
+</form>
+@*Миниатюра объявления
+<style>
+    .cards {
+        transition: all 0.2s ease;
+        cursor: pointer
+    }
+    .cards:hover {
+        box-shadow: 5px 6px 6px 2px #e9ecef;
+        transform: scale(1.05)
+    }
+</style>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<div class="card mb-1 cards " style="width: 18rem;">
+    <img src="~/images/ads/image.png" class="card-img-top"/>
+    <div class="card-body">
+        <h5 class="card-title">Залупа коня</h5>
+        <p class="card-text">Продаю залупу коня, в хорошем состоянии</p>
+        <a href="/" class="btn btn-primary stretched-link">Перейти к объявлению...</a>
+    </div>
+    <div class="card-footer">
+        <center>
+        <h5 class="card-text">Цена: 5000$</h5>
+        <a href="/" class="card-link">Username</a>
+        </center>
+    </div>
+</div>*@

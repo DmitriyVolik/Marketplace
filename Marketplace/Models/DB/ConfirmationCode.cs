@@ -6,8 +6,6 @@ namespace Marketplace.Models.DB
 
         public string Code { get; set; }
 
-        public bool IsActivated { get; set; }
-
         public User User { get; set; }
     }
 }

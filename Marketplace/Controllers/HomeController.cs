@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Marketplace.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Marketplace.Controllers
 {
@@ -21,7 +22,6 @@ namespace Marketplace.Controllers
         {
             return View();
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

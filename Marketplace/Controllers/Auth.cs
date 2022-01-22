@@ -20,12 +20,6 @@ namespace Marketplace.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private Context _db;
-        
-        public IActionResult EmailCheck()
-        {
-            return View();
-        }
-
         public Auth(ILogger<HomeController> logger, Context db )
         {
             _logger = logger;
@@ -40,6 +34,11 @@ namespace Marketplace.Controllers
         public IActionResult SignIn()
         {
             return View();
+        }
+        
+        public IActionResult EmailCheck(EmailCheck emailCheck)
+        {
+            return View(emailCheck);
         }
         
         [HttpPost("CreateAccount")]
@@ -81,39 +80,24 @@ namespace Marketplace.Controllers
                 return View("SignUp");
             }
 
-            
-            
-            /*
-            var claims = new List<Claim>
-            {
-                new(ClaimTypes.Name, username),
-                new (ClaimTypes.NameIdentifier, username),
-                new (ClaimTypes.Email, email),
-                new Claim(ClaimTypes.Role, "User")
-                
-            };
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-            HttpContext.SignInAsync(claimsPrincipal);*/
-            
-            var user = new User() {Email = email, Username = username, PasswordHash = PasswordHash.CreateHash(password)};
+            var user = new User() {Email = email, Username = username, PasswordHash = PasswordHash.CreateHash(password), IsActivated = false};
             _db.Users.Add(user);
 
             Random rnd = new Random();
             string codeStr="";
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 6; i++)
             {
                 codeStr += rnd.Next(0, 10).ToString();
             }
 
-            var code = new ConfirmationCode { Code = codeStr, IsActivated = false, User = user };
-
+            var code = new ConfirmationCode { Code = codeStr, User = user };
+            
             _db.ConfirmationCodes.Add(code);
             _db.SaveChanges();
             Task.Run(() => ExpireCode(code));
             
-            Email.Send(email,$"<h1>Verification code:</h1><h2>{code}</h2><h2>It will be active until 5 minutes</h2>", "Verification code");
-            return View("EmailCheck");
+            Email.Send(email,$"<h1>Verification code:</h1><h2>{codeStr}</h2><h2>It will be active until 5 minutes</h2>", "Verification code");
+            return RedirectToAction("EmailCheck", new EmailCheck(){Username = username});
         }
         
         [HttpPost("SignInAccount")]
@@ -121,7 +105,7 @@ namespace Marketplace.Controllers
         {
             var user = _db.Users.FirstOrDefault(x => x.Username == username );
             
-            if (user==null || !PasswordHash.ValidatePassword(password, user.PasswordHash))
+            if (user==null || !user.IsActivated || !PasswordHash.ValidatePassword(password, user.PasswordHash))
             {
                 TempData["Error"] = "Error: incorrect login or password";
                 return View("SignIn");
@@ -132,13 +116,44 @@ namespace Marketplace.Controllers
                 new(ClaimTypes.Name, username),
                 new (ClaimTypes.NameIdentifier, username),
                 new (ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, "User")
+                new (ClaimTypes.Role, "User")
 
             };
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             HttpContext.SignInAsync(claimsPrincipal);
             return Redirect("/");
+        }
+
+        [HttpPost("CheckEmailCode")]
+        public IActionResult CheckEmailCode(string code, string username)
+        {
+            var user = _db.Users.FirstOrDefault(x => x.Username == username);
+
+            var dbCode = _db.ConfirmationCodes.Include(x => x.User).FirstOrDefault(x => x.User == user);
+            
+            if (dbCode!=null && dbCode.Code==code)
+            {
+                _db.ConfirmationCodes.Remove(dbCode);
+                user.IsActivated = true;
+                _db.SaveChanges();
+                
+                var claims = new List<Claim>
+                {
+                    new(ClaimTypes.Name, user.Username),
+                    new (ClaimTypes.NameIdentifier, user.Username),
+                    new (ClaimTypes.Email, user.Email),
+                    new (ClaimTypes.Role, "User")
+                
+                };
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                HttpContext.SignInAsync(claimsPrincipal);
+
+                return Redirect("/");
+            }
+            TempData["Error"] = "Error: incorrect code";
+            return EmailCheck(new EmailCheck() { Username = username });
         }
         
         public IActionResult Logout()
@@ -147,15 +162,18 @@ namespace Marketplace.Controllers
             return Redirect("/");
         }
         
-        public void ExpireCode(ConfirmationCode userCode)
+        public void ExpireCode(ConfirmationCode userCode, bool isVerify=true)
         {
             Thread.Sleep(300000);
 
             var code = _db.ConfirmationCodes.Include(x=>x.User).FirstOrDefault(userCode);
-
-            if (code!=null && !code.IsActivated)
+            
+            if (code!=null)
             {
-                _db.Users.Remove(code.User);
+                if (isVerify)
+                {
+                    _db.Users.Remove(code.User);
+                }
                 _db.ConfirmationCodes.Remove(code);
                 _db.SaveChanges();
             }

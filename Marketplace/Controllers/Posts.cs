@@ -1,4 +1,10 @@
-﻿using Marketplace.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web;
+using Marketplace.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Controllers
@@ -11,13 +17,10 @@ namespace Marketplace.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreatePost(PostEditViewModel model)
+        public IActionResult CreatePost(PostEditViewModel model, IFormFileCollection uploads )
         {
-            System.Console.WriteLine($"{model.Test.Length}");
-            //foreach (var item in model.Images)
-            //{
-            //    System.Console.WriteLine($"Image: {item}");
-            //}
+            Console.WriteLine(model.Post.Title);
+            Console.WriteLine(uploads.Count);
             return View("AddPost");
         }
     }

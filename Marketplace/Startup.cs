@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Marketplace.Models;
 using Marketplace.Models.DB;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -32,8 +31,8 @@ namespace Marketplace
             ).AddCookie(
                 options =>
                 {
-                    options.LoginPath = "/login";
-                    options.AccessDeniedPath = "/index";
+                    options.LoginPath = "/Auth/SignIn";
+                    options.AccessDeniedPath = "/Auth/SignIn";
                     options.Events = new CookieAuthenticationEvents()
                     {
                         OnSigningIn = async context =>
@@ -44,6 +43,7 @@ namespace Marketplace
                 }
             );
             services.AddNpgsql<Context>(Configuration["ConnectionStrings:Database"]);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

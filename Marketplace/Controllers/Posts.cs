@@ -29,7 +29,7 @@ namespace Marketplace.Controllers
         {
             return View(new PostEditViewModel() 
             { 
-                Categories = _db.Categories
+                Categories = _db.Categories.ToList()
             });
         }
 
@@ -37,18 +37,8 @@ namespace Marketplace.Controllers
         [Authorize]
         public async Task<IActionResult> CreatePost(PostEditViewModel model, IFormFileCollection uploads )
         {
-            if (uploads.Count != 0)
-            {
-                foreach (var item in uploads)
-                {
-                    using (var writer = new FileStream($"{_appEnvironment.WebRootPath}/images/{Guid.NewGuid()}_{item.FileName}", FileMode.Create))
-                    {
-                        await item.CopyToAsync(writer);
-                        Console.WriteLine($"{item.FileName}: сохранён.");
-                    }
-                }
-            }
-            return View("AddPost");
+            Console.WriteLine(model.SelectedCategoryId);
+            return Redirect("/");
         }
     }
 }

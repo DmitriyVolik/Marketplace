@@ -37,17 +37,30 @@ namespace Marketplace.Controllers
         [Authorize]
         public async Task<IActionResult> CreatePost(PostEditViewModel model, IFormFileCollection uploads )
         {
+            var post = model.Post;
+            var nophotoPath = $"/images/nophoto.png";
+            Image image = new Image();
             if (uploads.Count != 0)
             {
                 foreach (var item in uploads)
                 {
-                    using (var writer = new FileStream($"{_appEnvironment.WebRootPath}/images/{Guid.NewGuid()}_{item.FileName}", FileMode.Create))
+                    var guid = Guid.NewGuid();
+                    string path = $"{_appEnvironment.WebRootPath}/images/{guid}_{item.FileName}";
+                    using (var writer = new FileStream(path, FileMode.Create))
                     {
+                        image = new Image()
+                        {
+                            Path = $"/images/{guid}_{item.FileName}",
+                            Post = post
+                        };
                         await item.CopyToAsync(writer);
+                        _db.Images.Add(image);
                         Console.WriteLine($"{item.FileName}: сохранён.");
                     }
                 }
+                _db.SaveChanges();
             }
+
             return View("AddPost");
         }
     }

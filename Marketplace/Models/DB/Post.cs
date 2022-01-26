@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Marketplace.Models.DB
@@ -23,5 +24,6 @@ namespace Marketplace.Models.DB
 
         [Required]
         public float Price { get; set; }
+        public List<Image> Images { get; set; } = new List<Image>();
     }
 }

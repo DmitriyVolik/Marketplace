@@ -1,0 +1,29 @@
+﻿@model Marketplace.Models.PostEditViewModel
+@{
+    var error = TempData["Error"] as string;
+}
+@if (!string.IsNullOrEmpty(error))
+{
+    <h3 class="alert-danger" style="padding: 20px">@error</h3>
+}
+<form class="w-50" method="post" asp-action="CreatePost" enctype="multipart/form-data" asp-controller="Posts">
+    <div class="mb-3">
+        <label for="TestInput" class="form-label">Название объявления</label>
+        <input asp-for="Post.Title" type="text" class="form-control" id="TestInput" />
+        <div id="adsTitleHelp" class="form-text">От названия зависит многое...</div>
+    </div>
+    <div class="mb-3">
+        <label for="adsImages" class="form-label">Изображения</label>
+        <input class="form-control" type="file" id="inputImages" multiple name="uploads"/>
+        <div id="adsDescriptionHelp" class="form-text">Выберите изображения, которые вы хотите добавить в объявление.</div>
+    </div>
+    <div class="mb-3">
+        <label for="adsDescription" class="form-label">Описание объявления</label>
+        <input type="text" class="form-control form-text form-check-inline" id="inputDescription" @*asp-for="Post.Description"*@ />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Post.Description" for="adsDescription" class="form-label">Объявленная цена</label>
+        <input type="number" class="form-control form-text form-check-inline" id="inputPrice" @*asp-for="Post.Price"*@ />
+    </div>
+    <button type="submit" class="btn btn-primary">Создать объявление</button>
+</form>

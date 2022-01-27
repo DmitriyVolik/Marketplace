@@ -1,7 +1,59 @@
-﻿@{
+﻿@model Marketplace.Models.ViewPosts
+@{
     ViewData["Title"] = "Home Page";
 }
-<form class="w-50" method="post" action="/AddAnnouncement">
+<style>
+    .cards {
+        transition: all 0.2s ease;
+        cursor: pointer
+    }
+    .cards:hover {
+        box-shadow: 5px 6px 6px 2px #e9ecef;
+        transform: scale(1.05)
+    }
+</style>
+    @foreach(var item in Model.Posts)
+{
+    if(Model.Posts != null)
+    {
+         <div class="d-flex align-content-center flex-wrap justify-content-center">
+            <div class="card mb-1 cards " style="width: 18rem;">
+                <img src="@item.Images[0].Path" class="card-img-top"/>
+                <div class="card-body">
+                    <h5 class="card-title">@item.Title</h5>
+                    <p class="card-text">@item.Description</p>
+                    <a href="/ViewPost/@item.Id" class="btn btn-primary stretched-link">Перейти к объявлению...</a>
+                </div>
+                <div class="card-footer">
+                    <center>
+                        <h5 class="card-text">@item.Price</h5>
+                        <a href="/" class="card-link">@item.User.Username</a>
+                    </center>
+                </div>
+            </div>
+        </div>   
+    }
+}
+
+@*<div class="d-flex align-content-center flex-wrap justify-content-center">
+    <div class="card mb-1 cards " style="width: 18rem;">
+        <img src="~/images/ads/image.png" class="card-img-top"/>
+        <div class="card-body">
+            <h5 class="card-title">Залупа коня</h5>
+            <p class="card-text">Продаю залупу коня, в хорошем состоянии</p>
+            <a href="/" class="btn btn-primary stretched-link">Перейти к объявлению...</a>
+        </div>
+        <div class="card-footer">
+            <center>
+            <h5 class="card-text">Цена: 5000$</h5>
+            <a href="/" class="card-link">Username</a>
+            </center>
+        </div>
+    </div>
+</div>*@
+
+
+@*<form class="w-50" method="post" action="/AddAnnouncement">
     <div class="mb-3">
         <label for="adsTitle" class="form-label">Название объявления</label>
         <input type="text" class="form-control" id="inputTitle" name="title" />
@@ -21,30 +73,4 @@
         <input type="number" class="form-control form-text form-check-inline" id="inputPrice" name="price" />
     </div>
     <button type="submit" class="btn btn-primary">Создать объявление</button>
-</form>
-@*Миниатюра объявления
-<style>
-    .cards {
-        transition: all 0.2s ease;
-        cursor: pointer
-    }
-    .cards:hover {
-        box-shadow: 5px 6px 6px 2px #e9ecef;
-        transform: scale(1.05)
-    }
-</style>
-
-<div class="card mb-1 cards " style="width: 18rem;">
-    <img src="~/images/ads/image.png" class="card-img-top"/>
-    <div class="card-body">
-        <h5 class="card-title">Залупа коня</h5>
-        <p class="card-text">Продаю залупу коня, в хорошем состоянии</p>
-        <a href="/" class="btn btn-primary stretched-link">Перейти к объявлению...</a>
-    </div>
-    <div class="card-footer">
-        <center>
-        <h5 class="card-text">Цена: 5000$</h5>
-        <a href="/" class="card-link">Username</a>
-        </center>
-    </div>
-</div>*@
+</form>*@

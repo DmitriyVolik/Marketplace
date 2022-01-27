@@ -3,6 +3,7 @@ using System;
 using Marketplace.Models.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Marketplace.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220123201051_Posts")]
+    partial class Posts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,9 +98,6 @@ namespace Marketplace.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -153,7 +152,7 @@ namespace Marketplace.Migrations
             modelBuilder.Entity("Marketplace.Models.DB.Image", b =>
                 {
                     b.HasOne("Marketplace.Models.DB.Post", "Post")
-                        .WithMany("Images")
+                        .WithMany()
                         .HasForeignKey("PostId");
 
                     b.Navigation("Post");
@@ -176,11 +175,6 @@ namespace Marketplace.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Marketplace.Models.DB.Post", b =>
-                {
-                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

@@ -35,7 +35,7 @@ namespace Marketplace.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult CreatePost(PostEditViewModel model, IFormFileCollection uploads)
+        public async Task<IActionResult> CreatePost(PostEditViewModel model, IFormFileCollection uploads)
         {
             model.Post.Category = _db.Categories.FirstOrDefault(x => x.Id == model.SelectedCategoryId);
             model.Post.User = _db.Users.FirstOrDefault(x => x.Username == User.Identity.Name);
@@ -55,7 +55,7 @@ namespace Marketplace.Controllers
                         image = new Image()
                         {
                             Path = $"/images/{guid}_{item.FileName}",
-                            Post = post
+                            Post =  model.Post
                         };
                         await item.CopyToAsync(writer);
                         _db.Images.Add(image);

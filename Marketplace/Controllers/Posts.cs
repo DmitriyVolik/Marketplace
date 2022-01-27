@@ -42,13 +42,37 @@ namespace Marketplace.Controllers
             _db.Posts.Add(model.Post);
             _db.SaveChanges();
             
+            var nophotoPath = $"/images/nophoto.png";
+            Image image = new Image();
+            if (uploads.Count != 0)
+            {
+                foreach (var item in uploads)
+                {
+                    var guid = Guid.NewGuid();
+                    string path = $"{_appEnvironment.WebRootPath}/images/{guid}_{item.FileName}";
+                    using (var writer = new FileStream(path, FileMode.Create))
+                    {
+                        image = new Image()
+                        {
+                            Path = $"/images/{guid}_{item.FileName}",
+                            Post = post
+                        };
+                        await item.CopyToAsync(writer);
+                        _db.Images.Add(image);
+                        Console.WriteLine($"{item.FileName}: сохранён.");
+                    }
+                }
+                _db.SaveChanges();
+            }
+            
             return Redirect("/");
         }
 
         public IActionResult UserSales()
         {
-            
+          
             return View();
+
         }
     }
 }

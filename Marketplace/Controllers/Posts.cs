@@ -44,7 +44,11 @@ namespace Marketplace.Controllers
             
             return Redirect("/");
         }
-        
-        
+
+        public IActionResult UserSales()
+        {
+            
+            return View();
+        }
     }
 }

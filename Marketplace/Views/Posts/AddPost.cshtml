@@ -18,24 +18,24 @@
         </select>
 
         <div class="mb-3">
-            <label for="TestInput" class="form-label">Название объявления</label>
+            <label for="TestInput" class="form-label">Name</label>
             <input asp-for="Post.Title" type="text" class="form-control" id="TestInput"/>
-            <div id="adsTitleHelp" class="form-text">От названия зависит многое...</div>
+            <div id="adsTitleHelp" minlength="3" class="form-text">Name is important</div>
         </div>
         <div class="mb-3">
-            <label for="adsImages" class="form-label">Изображения</label>
+            <label class="form-label">Images</label>
             <input class="form-control" type="file" id="inputImages" multiple name="uploads"/>
-            <div id="adsDescriptionHelp" class="form-text">Выберите изображения, которые вы хотите добавить в объявление.</div>
+            <div id="adsDescriptionHelp" class="form-text">Select images</div>
         </div>
         <div class="mb-3">
-            <label for="adsDescription" class="form-label">Описание объявления</label>
-            <input type="text" class="form-control form-text form-check-inline" id="inputDescription" @*asp-for="Post.Description"*@/>
+            <label type="text" class="form-label">Details</label>
+            <input asp-for="Post.Description" type="text" minlength="10" class="form-control form-text form-check-inline" id="inputDescription"/>
         </div>
         <div class="mb-3">
-            <label asp-for="Post.Description" for="adsDescription" class="form-label">Объявленная цена</label>
-            <input type="number" class="form-control form-text form-check-inline" id="inputPrice" @*asp-for="Post.Price"*@/>
+            <label asp-for="Post.Price" class="form-label">Price</label>
+            <input type="number" min="0" class="form-control form-text form-check-inline" id="inputPrice" @*asp-for="Post.Price"*@/>
         </div>
-        <button type="submit" class="btn btn-primary">Создать объявление</button>
+        <button type="submit" class="btn btn-primary">Create</button>
     </form>
     
 </div>

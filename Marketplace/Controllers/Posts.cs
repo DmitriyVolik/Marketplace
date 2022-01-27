@@ -17,7 +17,7 @@ namespace Marketplace.Controllers
     {
         IWebHostEnvironment _appEnvironment;
         Context _db;
-
+ 
         public Posts(Context _db, IWebHostEnvironment appEnvironment)
         {
             this._db = _db;
@@ -35,10 +35,16 @@ namespace Marketplace.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreatePost(PostEditViewModel model, IFormFileCollection uploads )
+        public IActionResult CreatePost(PostEditViewModel model, IFormFileCollection uploads)
         {
-            Console.WriteLine(model.SelectedCategoryId);
+            model.Post.Category = _db.Categories.FirstOrDefault(x => x.Id == model.SelectedCategoryId);
+            model.Post.User = _db.Users.FirstOrDefault(x => x.Username == User.Identity.Name);
+            _db.Posts.Add(model.Post);
+            _db.SaveChanges();
+            
             return Redirect("/");
         }
+        
+        
     }
 }

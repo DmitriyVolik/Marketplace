@@ -67,6 +67,8 @@ namespace Marketplace
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
+            SeedData.EnsurePopulated(app);
 
             app.UseEndpoints(endpoints =>
             {

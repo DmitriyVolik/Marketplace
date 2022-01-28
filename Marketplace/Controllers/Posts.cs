@@ -59,7 +59,7 @@ namespace Marketplace.Controllers
                         };
                         await item.CopyToAsync(writer);
                         _db.Images.Add(image);
-                        Console.WriteLine($"{item.FileName}: сохранён.");
+                        //Console.WriteLine($"{item.FileName}: сохранён.");
                     }
                 }
                 _db.SaveChanges();

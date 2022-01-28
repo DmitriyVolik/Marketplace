@@ -1,4 +1,5 @@
-﻿@model Marketplace.Models.ViewPosts
+﻿@using Microsoft.EntityFrameworkCore.Infrastructure
+@model Marketplace.Models.ViewPosts
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -12,28 +13,59 @@
         transform: scale(1.05)
     }
 </style>
-    @foreach(var item in Model.Posts)
-{
-    if(Model.Posts != null)
+
+
+<div class="container input-group mb-3 d-flex justify-content-center" style="width: 75%">
+    <input type="text" class="form-control" placeholder="Поиск..." aria-label="Поиск..." aria-describedby="button-addon2">
+    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Найти</button>
+</div>
+
+@*<div class="list-group list-group-horizontal">
+    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+        Все категории
+    </a>
+    @foreach (var item in Model.Categories)
     {
-         <div class="d-flex align-content-center flex-wrap justify-content-center">
-            <div class="card mb-1 cards " style="width: 18rem;">
-                <img src="@item.Images[0].Path" class="card-img-top"/>
-                <div class="card-body">
-                    <h5 class="card-title">@item.Title</h5>
-                    <p class="card-text">@item.Description</p>
-                    <a href="/ViewPost/@item.Id" class="btn btn-primary stretched-link">Перейти к объявлению...</a>
-                </div>
-                <div class="card-footer">
-                    <center>
-                        <h5 class="card-text">@item.Price</h5>
-                        <a href="/" class="card-link">@item.User.Username</a>
-                    </center>
-                </div>
-            </div>
-        </div>   
+        <a href="#" class="list-group-item list-group-item-action text-center">@item.CategoryName</a>
     }
-}
+</div>*@
+
+<div class="d-flex m-">
+    <div class="list-group" style="width: 30%">
+        <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+            Все категории
+        </button>
+        @foreach (var item in Model.Categories)
+        {
+            <button type="button" class="list-group-item list-group-item-action">@item.CategoryName</button>
+        }
+    </div>
+
+    <div class="d-flex align-content-center flex-wrap justify-content-center">
+        @foreach(var item in Model.Posts)
+        {
+            if(Model.Posts != null)
+            {
+                <div class="d-flex align-content-center flex-wrap justify-content-center m-2">
+                    <div class="card mb-1 cards " style="width: 18rem;">
+                        <img src="@item.Images[0].Path" class="card-img-top"/>
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text">@item.Description</p>
+                            <a href="/ViewPost/@item.Id" class="btn btn-primary stretched-link">Перейти к объявлению...</a>
+                        </div>
+                        <div class="card-footer">
+                            <center>
+                                <h5 class="card-text">@item.Price</h5>
+                                <a href="/" class="card-link">@item.User.Username</a>
+                            </center>
+                        </div>
+                    </div>
+                </div>   
+            }
+        }
+    </div>
+</div>
 
 @*<div class="d-flex align-content-center flex-wrap justify-content-center">
     <div class="card mb-1 cards " style="width: 18rem;">

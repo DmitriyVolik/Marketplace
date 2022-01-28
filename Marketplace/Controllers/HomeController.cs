@@ -28,7 +28,6 @@ namespace Marketplace.Controllers
                 Categories = _db.Categories.ToList(),
                 Posts = _db.Posts.Include(x => x.Images).Include(x => x.User).ToList()
             };
-            //Console.WriteLine(model.Posts[0].Images[0].Path);
             return View(model);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

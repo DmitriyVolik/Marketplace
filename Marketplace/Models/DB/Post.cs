@@ -18,6 +18,9 @@ namespace Marketplace.Models.DB
 
         [Required]
         public User User { get; set; }
+        
+        [Required]
+        public string PhoneNumber { get; set; }
 
         [Required]
         public Category Category { get; set; }

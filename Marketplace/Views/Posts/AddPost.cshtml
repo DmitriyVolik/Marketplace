@@ -33,8 +33,12 @@
             <input asp-for="Post.Description" type="text" minlength="10" class="form-control form-text form-check-inline" id="inputDescription"/>
         </div>
         <div class="mb-3">
+            <label type="text" class="form-label">Phone Number</label>
+            <input asp-for="Post.PhoneNumber" type="text" minlength="10" class="form-control form-text form-check-inline" id="inputPhoneNumber"/>
+            </div>
+        <div class="mb-3">
             <label asp-for="Post.Price" class="form-label">Price</label>
-            <input type="number" min="0" class="form-control form-text form-check-inline" id="inputPrice" @*asp-for="Post.Price"*@/>
+            <input type="number" min="0" class="form-control form-text form-check-inline" id="inputPrice" asp-for="Post.Price"/>
         </div>
         <button type="submit" class="btn btn-primary">Create</button>
     </form>

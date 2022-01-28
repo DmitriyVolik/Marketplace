@@ -17,7 +17,7 @@ namespace Marketplace.Controllers
     {
         IWebHostEnvironment _appEnvironment;
         Context _db;
-
+ 
         public Posts(Context _db, IWebHostEnvironment appEnvironment)
         {
             this._db = _db;
@@ -29,15 +29,19 @@ namespace Marketplace.Controllers
         {
             return View(new PostEditViewModel() 
             { 
-                Categories = _db.Categories
+                Categories = _db.Categories.ToList()
             });
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreatePost(PostEditViewModel model, IFormFileCollection uploads )
+        public async Task<IActionResult> CreatePost(PostEditViewModel model, IFormFileCollection uploads)
         {
-            var post = model.Post;
+            model.Post.Category = _db.Categories.FirstOrDefault(x => x.Id == model.SelectedCategoryId);
+            model.Post.User = _db.Users.FirstOrDefault(x => x.Username == User.Identity.Name);
+            _db.Posts.Add(model.Post);
+            _db.SaveChanges();
+            
             var nophotoPath = $"/images/nophoto.png";
             Image image = new Image();
             if (uploads.Count != 0)
@@ -51,7 +55,7 @@ namespace Marketplace.Controllers
                         image = new Image()
                         {
                             Path = $"/images/{guid}_{item.FileName}",
-                            Post = post
+                            Post =  model.Post
                         };
                         await item.CopyToAsync(writer);
                         _db.Images.Add(image);
@@ -60,8 +64,15 @@ namespace Marketplace.Controllers
                 }
                 _db.SaveChanges();
             }
+            
+            return Redirect("/");
+        }
 
-            return View("AddPost");
+        public IActionResult UserSales()
+        {
+          
+            return View();
+
         }
     }
 }

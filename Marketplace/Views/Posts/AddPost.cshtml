@@ -22,6 +22,12 @@
         <input type="text" class="form-control form-text form-check-inline" id="inputDescription" @*asp-for="Post.Description"*@ />
     </div>
     <div class="mb-3">
+            <label for="adsDescription" class="form-label">Номер телефона</label>
+        <input type="text" class="form-control form-text form-check-inline" id="inputPhoneNumber" @*asp-for="Post.Description"*@ />
+        <div id="adsDescriptionHelp" class="form-text">Ваш номер телефона, на который можно будет позвонить.</div>
+        </div>
+    
+    <div class="mb-3">
         <label asp-for="Post.Description" for="adsDescription" class="form-label">Объявленная цена</label>
         <input type="number" class="form-control form-text form-check-inline" id="inputPrice" @*asp-for="Post.Price"*@ />
     </div>

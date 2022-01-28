@@ -11,5 +11,7 @@ namespace Marketplace.Models.DB
         public string PasswordHash { get; set; }
         
         public bool IsActivated { get; set; }
+        
+        public string PhoneNumber { get; set; }
     }
 }

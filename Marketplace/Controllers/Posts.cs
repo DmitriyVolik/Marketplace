@@ -70,9 +70,7 @@ namespace Marketplace.Controllers
 
         public IActionResult UserSales()
         {
-          
-            return View();
-
+            return View(new ViewPosts(){Posts = _db.Posts.ToList()});
         }
     }
 }

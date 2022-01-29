@@ -7,7 +7,6 @@ namespace Marketplace.Models.DB
         public  Context(DbContextOptions<Context> options)
             : base(options)
         {
-            Database.EnsureCreated();
         }
         
         public DbSet<User> Users { get; set; }
@@ -16,6 +15,8 @@ namespace Marketplace.Models.DB
         public DbSet<Post> Posts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Image> Images { get; set; }
+        
+        public DbSet<Order> Orders { get; set; }
         
     }
 }

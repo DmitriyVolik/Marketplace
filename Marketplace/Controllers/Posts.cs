@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Marketplace.Controllers
 {
@@ -68,6 +69,15 @@ namespace Marketplace.Controllers
             return Redirect("/");
         }
 
+        public IActionResult OpenPost(int id)
+        {
+            return View(new OpenPostViewModel()
+            {
+                Post = _db.Posts.Include(x=>x.User).FirstOrDefault(x=>x.Id == id),
+                Images = _db.Images.Include(x=>x.Post).Where(x=>x.Post.Id == id).ToList()
+            });
+        }
+        
         public IActionResult UserSales()
         {
           

@@ -4,15 +4,23 @@
     ViewData["Title"] = "Home Page";
 }
 <style>
-    .cards {
+    .cards 
+    {
         transition: all 0.2s ease;
         cursor: pointer
     }
-    .cards:hover {
+    .cards:hover 
+    {
         box-shadow: 5px 6px 6px 2px #e9ecef;
         transform: scale(1.05)
     }
-</style>
+    img
+    {
+        height: 200px;
+        width: 200px;
+    }
+    
+    </style>
 
 
 <div class="container input-group mb-3 d-flex justify-content-center" style="width: 75%">
@@ -32,13 +40,27 @@
 
 <div class="d-flex m-">
     <div class="list-group" style="width: 30%">
-        <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
-            Все категории
-        </button>
         @foreach (var item in Model.Categories)
         {
-            <button type="button" class="list-group-item list-group-item-action">@item.CategoryName</button>
-        }
+            if (Model.SelectedCategoryId == item.Id)
+            {
+                <a type="button" href="/?id=@item.Id" class="list-group-item list-group-item-action active" aria-current="true">@item.CategoryName</a>
+            }
+            else
+            {
+                <a type="button" href="/?id=@item.Id" class="list-group-item list-group-item-action">@item.CategoryName</a>
+            }
+        @*@for (int i = 0; i < Model.Categories.Count; i++)
+        {
+            if (Model.SelectedCategoryId == i)
+            {
+                <a type="button" href="/?id=@Model.Categories[i].Id" class="list-group-item list-group-item-action active" aria-current="true">@Model.Categories[i].CategoryName</a>
+            }
+            else
+            {
+                <a type="button" href="/?id=@Model.Categories[i].Id" class="list-group-item list-group-item-action">@Model.Categories[i].CategoryName</a>
+            }
+        }*@
     </div>
 
     <div class="d-flex align-content-center flex-wrap justify-content-center">
@@ -47,16 +69,16 @@
             if(Model.Posts != null)
             {
                 <div class="d-flex align-content-center flex-wrap justify-content-center m-2">
-                    <div class="card mb-1 cards " style="width: 18rem;">
+                    <div class="card mb-1 cards" style="width: 18rem;">
                         <img src="@item.Images[0].Path" class="card-img-top"/>
                         <div class="card-body">
                             <h5 class="card-title">@item.Title</h5>
-                            <p class="card-text">@item.Description</p>
-                            <a href="/ViewPost/@item.Id" class="btn btn-primary stretched-link">Перейти к объявлению...</a>
+                            <p class="card-text">@item.Description.Substring(0, 10)...</p>
+                            <a href="/Posts/OpenPost?id=@item.Id" class="btn btn-primary stretched-link">Перейти к объявлению...</a>
                         </div>
                         <div class="card-footer">
                             <center>
-                                <h5 class="card-text">@item.Price</h5>
+                                <h5 class="card-text">@item.Price$</h5>
                                 <a href="/" class="card-link">@item.User.Username</a>
                             </center>
                         </div>

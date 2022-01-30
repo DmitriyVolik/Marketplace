@@ -21,14 +21,28 @@ namespace Marketplace.Controllers
             this._db = _db;
             _logger = logger;
         }
-        public IActionResult Index()
+        public IActionResult Index(int id = 0)
         {
-            var model = new ViewPosts()
+            if (id == 0)
             {
-                Categories = _db.Categories.ToList(),
-                Posts = _db.Posts.Include(x => x.Images).Include(x => x.User).ToList()
-            };
-            return View(model);
+                var model = new ViewPosts()
+                {
+                    Categories = _db.Categories.ToList(),
+                    Posts = _db.Posts.Include(x => x.Images).Include(x => x.User).ToList(),
+                    SelectedCategoryId = id
+                };
+                return View(model);
+            }
+            else
+            {
+                var model = new ViewPosts()
+                {
+                    Categories = _db.Categories.ToList(),
+                    Posts = _db.Posts.Include(x => x.Images).Include(x => x.User).Where(x=>x.Category.Id == id).ToList(),
+                    SelectedCategoryId = id
+                };
+                return View(model);
+            }
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

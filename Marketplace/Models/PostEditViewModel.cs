@@ -8,7 +8,6 @@ namespace Marketplace.Models
     {
         public Post Post { get; set; }
         public List<Category> Categories { get; set; }
-
         public int SelectedCategoryId { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Marketplace.Models.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Marketplace.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220128213013_updPosts")]
+    partial class updPosts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,40 +82,6 @@ namespace Marketplace.Migrations
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("Marketplace.Models.DB.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("BuyerId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("DeliveryAddress")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("PostId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("SellerId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BuyerId");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("SellerId");
-
-                    b.ToTable("Orders");
-                });
-
             modelBuilder.Entity("Marketplace.Models.DB.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -136,6 +104,9 @@ namespace Marketplace.Migrations
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
+
+                    b.Property<string>("State")
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -171,9 +142,6 @@ namespace Marketplace.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
                     b.Property<string>("Username")
                         .HasColumnType("text");
 
@@ -198,27 +166,6 @@ namespace Marketplace.Migrations
                         .HasForeignKey("PostId");
 
                     b.Navigation("Post");
-                });
-
-            modelBuilder.Entity("Marketplace.Models.DB.Order", b =>
-                {
-                    b.HasOne("Marketplace.Models.DB.User", "Buyer")
-                        .WithMany()
-                        .HasForeignKey("BuyerId");
-
-                    b.HasOne("Marketplace.Models.DB.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId");
-
-                    b.HasOne("Marketplace.Models.DB.User", "Seller")
-                        .WithMany()
-                        .HasForeignKey("SellerId");
-
-                    b.Navigation("Buyer");
-
-                    b.Navigation("Post");
-
-                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("Marketplace.Models.DB.Post", b =>

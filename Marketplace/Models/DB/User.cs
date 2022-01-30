@@ -9,7 +9,8 @@ namespace Marketplace.Models.DB
         public string Email { get; set; }
         
         public string PasswordHash { get; set; }
-        
         public bool IsActivated { get; set; }
+        
+        public string PhoneNumber { get; set; }
     }
 }

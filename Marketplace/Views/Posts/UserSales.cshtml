@@ -1,15 +1,40 @@
-@model Marketplace.Models.ViewPosts
+@model Marketplace.Models.SalesViewModel
 
-@foreach (var item in Model.Posts)
-{
-    <div
-        @if(item.State=="NotConfirmed"){<text>class="card text-white bg-secondary mb-3" </text>}
-        style="max-width: 18rem;">
-        <div class="card-header">Header</div>
-        <div class="card-body">
-            <h5 class="card-title">Secondary card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+<div class="d-flex justify-content-center align-content-center flex-wrap">
+    @foreach (var item in Model.Sales)
+    {
+        <div
+            @if (item.Status == "Unconfirmed")
+            {<text>class="card text-white bg-secondary m-3" </text>}
+            @if (item.Status == "Canceled")
+            {<text>class="card text-white bg-danger m-3" </text>}
+            @if (item.Status == "Active")
+            {<text>class="card text-white bg-primary m-3" </text>}
+            style="max-width: 18rem;">
+
+
+            <div class="card-header">@item.Post.Price$</div>
+            <div class="card-body">
+                <h5 class="card-title">@item.Post.Title</h5>
+                <p class="card-text">@item.DeliveryAddress</p>
+                <form asp-controller="Posts" asp-action="EditOrder" method="post">
+                    <input name="id" value="@item.Id" type="hidden">
+                    @if (item.Status == "Unconfirmed")
+                    {<text>
+                         <button type="submit" class="btn btn-primary" name="btn" value="Confirm">Confirm order</button>
+                         <button type="submit" class="btn btn-danger" name="btn" value="Cancel">Cancel</button>
+                     </text>}
+                </form>
+
+            </div>
         </div>
-    </div>
+    }
+</div>
+
+<style>
+    .card-body{
+    width: 235px;
+    }
     
-}
+</style>

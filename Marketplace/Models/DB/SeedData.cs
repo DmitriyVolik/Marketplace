@@ -35,9 +35,11 @@ namespace Marketplace.Models.DB
                         Email = "admin@gmail.com",
                         Username = "Admin",
                         IsActivated = true,
+                        PhoneNumber = "0963456756",
                         PasswordHash = PasswordHash.CreateHash("Passw0rd%")
                     }
                 };
+                context.Users.AddRange(users);
                 context.SaveChanges();
             }
         }

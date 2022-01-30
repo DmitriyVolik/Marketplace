@@ -15,5 +15,7 @@ namespace Marketplace.Models.DB
         public Post Post { get; set; }
         
         public string Status { get; set; }
+        
+        public string DeliveryAddress { get; set; }
     }
 }

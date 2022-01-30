@@ -18,7 +18,7 @@ namespace Marketplace.Models.DB
 
         [Required]
         public User User { get; set; }
-        
+
         [Required]
         public string PhoneNumber { get; set; }
 
@@ -28,5 +28,7 @@ namespace Marketplace.Models.DB
         [Required]
         public float Price { get; set; }
         public List<Image> Images { get; set; } = new List<Image>();
+
+
     }
 }

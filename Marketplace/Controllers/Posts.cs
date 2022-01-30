@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Marketplace.Controllers
 {
@@ -70,9 +71,34 @@ namespace Marketplace.Controllers
 
         public IActionResult UserSales()
         {
-          
-            return View();
+            return View(new SalesViewModel
+                { Sales = _db.Orders.Include(x => x.Seller)
+                    .Include(x => x.Buyer)
+                    .Include(x => x.Post)
+                    .ToList()});
+        }
+        
+        [Authorize]
+        [HttpPost]
+        public IActionResult EditOrder(int id,string btn)
+        {
+            switch (btn)
+            {
+                case "Confirm":
+                    _db.Orders.FirstOrDefault(x => x.Id == id).Status="Active";
+                    break;
+                case "Cancel":
+                    _db.Orders.FirstOrDefault(x => x.Id == id).Status="Canceled";
+                    break;
+            }
 
+            _db.SaveChanges();
+            
+            return View("UserSales",new SalesViewModel
+            { Sales = _db.Orders.Include(x => x.Seller)
+                .Include(x => x.Buyer)
+                .Include(x => x.Post)
+                .ToList()});
         }
     }
 }

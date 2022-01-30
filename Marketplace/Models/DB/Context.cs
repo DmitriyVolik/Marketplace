@@ -4,7 +4,7 @@ namespace Marketplace.Models.DB
 {
     public class Context:DbContext
     {
-        public Context(DbContextOptions<Context> options)
+        public  Context(DbContextOptions<Context> options)
             : base(options)
         {
         }
@@ -15,5 +15,8 @@ namespace Marketplace.Models.DB
         public DbSet<Post> Posts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Image> Images { get; set; }
+        
+        public DbSet<Order> Orders { get; set; }
+        
     }
 }

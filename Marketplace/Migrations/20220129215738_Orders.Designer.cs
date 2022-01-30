@@ -3,6 +3,7 @@ using System;
 using Marketplace.Models.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Marketplace.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220129215738_Orders")]
+    partial class Orders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,9 +93,6 @@ namespace Marketplace.Migrations
                     b.Property<int?>("BuyerId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("DeliveryAddress")
-                        .HasColumnType("text");
-
                     b.Property<int?>("PostId")
                         .HasColumnType("integer");
 
@@ -122,8 +121,14 @@ namespace Marketplace.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("BuyerId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("DeliveryAddress")
+                        .HasColumnType("text");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -137,6 +142,9 @@ namespace Marketplace.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<string>("State")
+                        .HasColumnType("text");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -146,6 +154,8 @@ namespace Marketplace.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BuyerId");
 
                     b.HasIndex("CategoryId");
 
@@ -223,6 +233,10 @@ namespace Marketplace.Migrations
 
             modelBuilder.Entity("Marketplace.Models.DB.Post", b =>
                 {
+                    b.HasOne("Marketplace.Models.DB.User", "Buyer")
+                        .WithMany()
+                        .HasForeignKey("BuyerId");
+
                     b.HasOne("Marketplace.Models.DB.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
@@ -234,6 +248,8 @@ namespace Marketplace.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Buyer");
 
                     b.Navigation("Category");
 

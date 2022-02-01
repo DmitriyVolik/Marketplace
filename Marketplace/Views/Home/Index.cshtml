@@ -61,7 +61,7 @@
                 <div class="d-flex align-content-center flex-wrap justify-content-center m-2">
 
                     <div class="card mb-1 cards " style="width: 18rem;">
-                        @*<img src="@item.Images[0].Path" class="card-img-top"/>*@
+                        <img src="@(item.Images.Count != 0 ? item.Images[0].Path : "images/nophoto.jpg")" class="card-img-top"/>
                       
                         <div class="card-body">
                             <h5 class="card-title">@item.Title</h5>
@@ -72,6 +72,7 @@
                             <center>
                                 <h5 class="card-text">@item.Price$</h5>
                                 <a href="/" class="card-link">@item.User.Username</a>
+                                <p class="card-text">@(item.AddTime != null ? item.AddTime : "null")</p>
                             </center>
                         </div>
                     </div>

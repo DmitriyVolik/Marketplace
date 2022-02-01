@@ -80,11 +80,13 @@ namespace Marketplace.Controllers
         
         public IActionResult UserSales()
         {
-            return View(new SalesViewModel
-                { Sales = _db.Orders.Include(x => x.Seller)
-                    .Include(x => x.Buyer)
-                    .Include(x => x.Post)
-                    .ToList()});
+            var sales=_db.Orders.Include(x => x.Seller)
+                .Include(x => x.Buyer)
+                .Include(x => x.Post)
+                .ToList();
+            sales.Sort();
+            
+            return View(new SalesViewModel(){Sales = sales});
         }
         
         [Authorize]
@@ -100,14 +102,9 @@ namespace Marketplace.Controllers
                     _db.Orders.FirstOrDefault(x => x.Id == id).Status="Canceled";
                     break;
             }
-
             _db.SaveChanges();
             
-            return View("UserSales",new SalesViewModel
-            { Sales = _db.Orders.Include(x => x.Seller)
-                .Include(x => x.Buyer)
-                .Include(x => x.Post)
-                .ToList()});
+            return Redirect("UserSales");
         }
     }
 }

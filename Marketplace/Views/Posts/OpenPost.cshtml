@@ -38,5 +38,20 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-    <p class="text-center fs-3">@Model.Post.Title</p>
+    <br/>
+    <div class="border border-1">
+        <div class="m-3">
+            <p>Published: @Model.Post.AddTime</p>
+            <div>
+                <p class="fs-2">@Model.Post.Title</p>
+                <h2>Price: @Model.Post.Price $.</h2>
+                <br/>
+                <p>@Model.Post.Description</p>
+            </div>
+            <br/>
+                <p>Phone number: @Model.Post.PhoneNumber</p>
+                <p>ID: @Model.Post.Id</p>
+        </div>
+    </div>
+
 </div>

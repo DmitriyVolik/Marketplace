@@ -40,6 +40,7 @@ namespace Marketplace.Controllers
         {
             model.Post.Category = _db.Categories.FirstOrDefault(x => x.Id == model.SelectedCategoryId);
             model.Post.User = _db.Users.FirstOrDefault(x => x.Username == User.Identity.Name);
+            model.Post.AddTime = DateTime.Now.ToString();
             _db.Posts.Add(model.Post);
             _db.SaveChanges();
             
